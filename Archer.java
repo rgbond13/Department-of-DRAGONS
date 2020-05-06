@@ -35,18 +35,19 @@ class Archer extends Player
         // Shoot arrow
         numberOfArrows--;
         boolean hitTarget = true;
-        if (!aimbotEnabled && rand.nextInt(2) == 0)
+        if (!aimbotEnabled && rand.nextInt(4) == 0)
         {
             hitTarget = false;
         }
         if (rand.nextInt(100) < target.evasion)
         {
             hitTarget = false;
+            System.out.println(target.username + " dodged " + username +   "'s attack!");
         }
         
         if (hitTarget)
         {
-            int damageDealt = 5;
+            int damageDealt = rand.nextInt(10) + 10;
             System.out.println(username + " shot " + target.username + " for " + damageDealt + " damage!");
             target.damage(damageDealt);
             addXp(damageDealt);

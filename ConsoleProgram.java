@@ -223,4 +223,10 @@ public class ConsoleProgram{
     public void print(Object o) {
         System.out.print(o);
     }
+    
+    public void clear()
+    {
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
 }
+

@@ -35,6 +35,21 @@ class Player
             "\nPosition: (" + x + ", " + y + ", " + z + ")" +
             "\nLevel " + level + ", XP: " + experience + " / " + experienceForNextLevelUp + "\n";
     }
+
+    public boolean equals(Player player)
+    {
+        return username == player.username &&
+            x == player.x &&
+            y == player.y &&
+            z == player.z &&
+            experience == player.experience &&
+            experienceForNextLevelUp == player.experienceForNextLevelUp &&
+            level == player.level &&
+            evasion == player.evasion &&
+            maxHealth == player.maxHealth &&
+            health == player.health &&
+            bandages == player.bandages;
+    }
     
     public String getUsername() {
         return username;
