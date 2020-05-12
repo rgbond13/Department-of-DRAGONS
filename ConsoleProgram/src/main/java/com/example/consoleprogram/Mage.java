@@ -1,3 +1,5 @@
+package com.example.consoleprogram;
+
 class Mage extends Player
 {
     public Mage(String username) {

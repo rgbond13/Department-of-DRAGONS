@@ -1,3 +1,5 @@
+package com.example.consoleprogram;
+
 class Archer extends Player
 {
     // Store whether or not archer is handicapped

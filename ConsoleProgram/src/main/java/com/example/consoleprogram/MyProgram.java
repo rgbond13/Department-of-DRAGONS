@@ -1,10 +1,12 @@
+package com.example.consoleprogram;
+
 import java.util.Random;
 import java.util.ArrayList;
 
 public class MyProgram extends ConsoleProgram
 {
     private ArrayList<Player> players;
-    
+
     public void run()
     {
         System.out.println("Now playing Department of DRAGONS!");
@@ -24,47 +26,7 @@ public class MyProgram extends ConsoleProgram
             int damage = rand.nextInt(10);
             player.damage(damage);
             System.out.println(player.getUsername() + " took " + damage + " damage.");
-            
-            /*
-            System.out.println(archer.getUsername() + "'s health: " + archer.getHealth());
-            System.out.println(mage.getUsername() + "'s health: " + mage.getHealth());
-            
-            String username;
-            if (isArchersTurn) {
-                username = archer.getUsername();
-            } else {
-                username = mage.getUsername();
-            }
-            System.out.println(username + "'s turn!");
-            
-            int choice = 0;
-            while (choice != 1 && choice != 2)
-            {
-                System.out.println("1. Bandage");
-                if (isArchersTurn) {
-                    System.out.println("2. Shoot Arrow");
-                } else {
-                    System.out.println("2. Fireball");
-                }
-                choice = readInt("Make a selection: ");
-            }
-            
-            if (choice == 1) {
-                if (isArchersTurn) {
-                    archer.bandage();
-                } else {
-                    mage.bandage();
-                }
-            } else if (choice == 2) {
-                if (isArchersTurn) {
-                    archer.shootArrow(mage);
-                } else {
-                    mage.castFireball(archer);
-                }
-            }
-            
-            isArchersTurn = !isArchersTurn;
-            */
+
             currentPlayer++;
             if (currentPlayer == numberOfPlayers) {
                 currentPlayer = 0;
@@ -104,7 +66,7 @@ public class MyProgram extends ConsoleProgram
                 newPlayer = null;
             }
             
-            playersplayers.add(newPlayer);
+            players.add(newPlayer);
         }
         return players;
     }
