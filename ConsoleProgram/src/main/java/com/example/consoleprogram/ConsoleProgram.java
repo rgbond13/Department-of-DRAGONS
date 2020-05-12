@@ -12,11 +12,12 @@ public class ConsoleProgram{
 
     public ConsoleProgram(){
         scanner = new Scanner(System.in);
-
     }
 
     public String readLine(String prompt){
-        System.out.print(prompt);
+        if (prompt.length() != 0) {
+            System.out.println(prompt);
+        }
         return scanner.nextLine();
     }
 
