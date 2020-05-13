@@ -11,8 +11,9 @@ class Mage extends Player
         return super.toString() +
             "Class: Mage\n";
     }
-    
-    public void castFireball(Player target) {
+
+    @Override
+    public void attack(Player target) {
         int damageDealt = 10;
         
         if (rand.nextInt(10) == 0) {

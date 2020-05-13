@@ -117,8 +117,6 @@ class Player
     public boolean isAlive() {
         return health > 0;
     }
-    
-    // Level 1 range: 50m
-    // Each levelup adds 10m
-    
+
+    public void attack(Player target) {}
 }

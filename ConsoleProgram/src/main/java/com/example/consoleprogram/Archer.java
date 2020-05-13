@@ -24,8 +24,9 @@ class Archer extends Player
             "\nAimBot Enabled: " + aimbotEnabled + 
             "\nNumber of Arrows: " + numberOfArrows + "\n";
     }
-    
-    public void shootArrow(Player target)
+
+    @Override
+    public void attack(Player target)
     {
         // Ensure we have arrows
         if (numberOfArrows <= 0)
