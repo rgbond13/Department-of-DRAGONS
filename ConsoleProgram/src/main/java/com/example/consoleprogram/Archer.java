@@ -46,6 +46,7 @@ class Archer extends Player
         {
             hitTarget = false;
             System.out.println(target.username + " dodged " + username +   "'s attack!");
+            return;
         }
         
         if (hitTarget)

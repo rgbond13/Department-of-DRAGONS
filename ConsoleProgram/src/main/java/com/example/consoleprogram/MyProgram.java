@@ -21,10 +21,11 @@ public class MyProgram extends ConsoleProgram
         // Create the players, and print their stats
         players = createPlayers(numberOfPlayers);
         for (Player player : players) {
-            System.out.println(player);
+            System.out.println(player.getUsername() + " Joined!");
         }
 
         // TODO: Sudden Death
+        // TODO: Random Player Order
         // Take turns until there are less than 2 players remaining
         int currentPlayer = 0;
         while (getNumberOfPlayersAlive() >= 2) {
@@ -42,11 +43,12 @@ public class MyProgram extends ConsoleProgram
         for (Player player : players) {
             if (player.isAlive()) {
                 System.out.println(player.getUsername() + " won!");
+                playCredits();
                 return;
             }
         }
         System.out.println("It's a tie! Nobody won.");
-        // TODO: Credits
+        playCredits();
     }
 
     private void playTurn(Player player) {
@@ -134,6 +136,7 @@ public class MyProgram extends ConsoleProgram
             System.out.println("What class would you like to play as?");
             System.out.println("1. Mage");
             System.out.println("2. Archer");
+            System.out.println("3. Gunner");
             int classInput = 0;
             while (classInput < 1 || classInput > 2) {
                 classInput = readInt("");
@@ -152,8 +155,10 @@ public class MyProgram extends ConsoleProgram
             case 2:
                 newPlayer = new Archer(username);
                 break;
+            case 3;
+                newPlayer = new Gunner(username);
             default:
-                System.out.println("Invalid selection made!");
+                System.out.println("Invalid Class. Try again.");
                 newPlayer = null;
             }
             
@@ -171,6 +176,11 @@ public class MyProgram extends ConsoleProgram
         }
         return count;
     }
+
+    private void playCredits() {
+        System.out.println("Executive Programmers: \nCody \nZoe \n\nProgrammers: \nRaine \nIden \nAiden \nColin \nMichael \nIsaac B. \nJoe \nIsaac R. \nDominic \nWillam \n\nLet me know if I forgot your name at https://github.com/rgbond13/Department-of-DRAGONS. \n Thank you for playing!")
+    }
+
 }
 
 

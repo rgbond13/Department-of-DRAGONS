@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ConsoleProgram.iml" filepath="$PROJECT_DIR$/ConsoleProgram.iml" group="Department of Dragons/ConsoleProgram" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1766295735/Department_of_Dragons.iml" filepath="$PROJECT_DIR$/.idea/modules/-1766295735/Department_of_Dragons.iml" group="Department_of_Dragons" />
+    </modules>
+  </component>
+</project>
