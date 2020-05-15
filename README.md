@@ -14,11 +14,14 @@ If you get errors about not having Git, and you're sure you have Git installed, 
 
 1. Open Android Studio. On the Welcome screen, click "Check out project from Version Control" > "Git"
 2. Change "Directory" to whatever folder you want it to download to.
-3. In the URL, put this:
+3. In the URL, put this for the normal game:
 `git@github.com:codydg/Department-of-DRAGONS.git`
-4. Click Clone. When it's done, it'll ask if you want to open the project. Click Yes.
+4. (alternative to 3) If you would like the testing edition, put this as the url:
+`git@github.com:rgbond13/Department-of-DRAGONS.git`
+. Click Clone. When it's done, it'll ask if you want to open the project. Click Yes.
 
 Upon opening, it may report an error saying "Unsupported Modules Detected". This is perfectly fine.
+Also, if you want to use testing features, open Git Bash and type `git checkout testing`. You can also type `git switch testing`
 
 # Running
 1. Near the top-center of your screen, click "Add Configuration"
