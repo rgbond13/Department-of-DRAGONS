@@ -1,6 +1,6 @@
 package com.example.consoleprogram;
 
-public class Gunner extends Player {
+public class Pistolier extends Player {
 
 
         // Store whether or not gunner is handicapped
@@ -9,7 +9,7 @@ public class Gunner extends Player {
         // Archer-specific variables
         private int numberOfBullets;
 
-        public Gunner(String username)
+        public Pistolier(String username)
         {
             super(username);
 
@@ -29,30 +29,29 @@ public class Gunner extends Player {
         @Override
         public void attack(Player target)
         {
-            // Ensure we have arrows
+            // Ensure we have bullets
             if (numberOfBullets <= 0)
             {
                 System.out.println(username + " tried to fire a bullet, but has none.");
                 return;
             }
 
-            // Shoot arrow
+            // Shoot bullet
             numberOfBullets--;
             boolean hitTarget = true;
-            if (!aimbotEnabled && rand.nextInt(4) == 0)
+            if (!aimbotEnabled && rand.nextInt(10) == 0)
             {
                 hitTarget = false;
             }
-            if (rand.nextInt(100) < target.evasion)
+            if (rand.nextInt(200) < target.evasion)
             {
-                hitTarget = false;
                 System.out.println(target.username + " dodged " + username +   "'s attack!");
                 return;
             }
 
             if (hitTarget)
             {
-                int damageDealt = rand.nextInt(10) + 10;
+                int damageDealt = rand.nextInt(10) + 5;
                 System.out.println(username + " shot " + target.username + " for " + damageDealt + " damage!");
                 target.damage(damageDealt);
                 addXp(damageDealt);
@@ -60,7 +59,7 @@ public class Gunner extends Player {
                 System.out.println(username + " fired at " + target.username + ", but missed.");
             }
 
-            // Warn user if they're out of arrows
+            // Warn user if they're out of bullets
             if (numberOfBullets <= 0)
             {
                 System.out.println(username + " is out of bullets!");
@@ -81,7 +80,5 @@ public class Gunner extends Player {
 
         // Level 1 range: 50m
         // Each levelup adds 10m
-
-    }
 
 }

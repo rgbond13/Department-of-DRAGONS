@@ -136,9 +136,9 @@ public class MyProgram extends ConsoleProgram
             System.out.println("What class would you like to play as?");
             System.out.println("1. Mage");
             System.out.println("2. Archer");
-            System.out.println("3. Gunner");
+            System.out.println("3. Pistolier");
             int classInput = 0;
-            while (classInput < 1 || classInput > 2) {
+            while (classInput < 1 || classInput > 3) {
                 classInput = readInt("");
             }
             
@@ -155,8 +155,9 @@ public class MyProgram extends ConsoleProgram
             case 2:
                 newPlayer = new Archer(username);
                 break;
-            case 3;
-                newPlayer = new Gunner(username);
+            case 3:
+                newPlayer = new Pistolier(username);
+                break;
             default:
                 System.out.println("Invalid Class. Try again.");
                 newPlayer = null;
@@ -178,7 +179,7 @@ public class MyProgram extends ConsoleProgram
     }
 
     private void playCredits() {
-        System.out.println("Executive Programmers: \nCody \nZoe \n\nProgrammers: \nRaine \nIden \nAiden \nColin \nMichael \nIsaac B. \nJoe \nIsaac R. \nDominic \nWillam \n\nLet me know if I forgot your name at https://github.com/rgbond13/Department-of-DRAGONS. \n Thank you for playing!")
+        System.out.println("Executive Programmers: \nCody \nZoe \n\nProgrammers: \nRaine \nIden \nAiden \nColin \nMichael \nIsaac B. \nJoe \nIsaac R. \nDominic \nWillam \n\nLet me know if I forgot your name at https://github.com/rgbond13/Department-of-DRAGONS. \n Thank you for playing!");
     }
 
 }
