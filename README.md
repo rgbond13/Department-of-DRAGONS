@@ -18,7 +18,8 @@ If you get errors about not having Git, and you're sure you have Git installed, 
 `git@github.com:codydg/Department-of-DRAGONS.git`
 4. (alternative to 3) If you would like the testing edition, put this as the url:
 `git@github.com:rgbond13/Department-of-DRAGONS.git`
-. Click Clone. When it's done, it'll ask if you want to open the project. Click Yes.
+ 
+5. Click Clone. When it's done, it'll ask if you want to open the project. Click Yes.
 
 Upon opening, it may report an error saying "Unsupported Modules Detected". This is perfectly fine.
 Also, if you want to use testing features, open Git Bash and type `git checkout testing`. You can also type `git switch testing`
