@@ -1,4 +1,8 @@
-package com.example.consoleprogram;
+package com.example.consoleprogram.game;
+
+import com.example.consoleprogram.players.Archer;
+import com.example.consoleprogram.players.Mage;
+import com.example.consoleprogram.players.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +25,7 @@ public class MyProgram extends ConsoleProgram
         // Create the players, and print their stats
         players = createPlayers(numberOfPlayers);
         for (Player player : players) {
-            System.out.println(player);
+            System.out.println(player.getDescription());
         }
 
         // TODO: Sudden Death
@@ -54,9 +58,8 @@ public class MyProgram extends ConsoleProgram
             return;
         }
 
-        String username = player.getUsername();
-        System.out.println("Player: " + username);
-        int option = readOption(Arrays.asList("Attack", "Heal", "Pass", "Surrender"));
+        System.out.println("Player: " + player);
+        int option = readOption(Arrays.asList("Attack", "Heal (" + player.getBandages() + " bandages)", "Pass", "Surrender", "Info"));
         switch (option) {
             case 1:
                 // Attack
@@ -65,18 +68,18 @@ public class MyProgram extends ConsoleProgram
                 ArrayList<String> targets = new ArrayList<>();
                 for (Player target : players) {
                     if (target != player && target.isAlive()) {
-                        targets.add(target.getUsername());
+                        targets.add(target.toString());
                     }
                 }
 
                 // Present players to user to pick from
                 int targetNumber = readOption(targets) - 1;
-                String targetUsername = targets.get(targetNumber);
+                String targetString = targets.get(targetNumber);
 
                 // Use player's choice to determine which Player object the user is targeting.
                 Player target = null;
                 for (Player possibleTarget : players) {
-                    if (targetUsername.equals(possibleTarget.getUsername())) {
+                    if (targetString.equals(possibleTarget.toString())) {
                         target = possibleTarget;
                     }
                 }
@@ -89,12 +92,17 @@ public class MyProgram extends ConsoleProgram
                 break;
             case 3:
                 // Pass
-                System.out.println(username + " chose to skip their turn.");
+                System.out.println(player + " chose to skip their turn.");
                 break;
             case 4:
                 // Surrender
                 player.damage(player.getHealth());
-                System.out.println(username + " surrendered!");
+                System.out.println(player + " surrendered!");
+                break;
+            case 5:
+                // Info
+                System.out.println(player.getDescription());
+                playTurn(player);
                 break;
         }
     }

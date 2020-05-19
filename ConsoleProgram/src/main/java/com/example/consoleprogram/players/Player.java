@@ -1,8 +1,8 @@
-package com.example.consoleprogram;
+package com.example.consoleprogram.players;
 
 import java.util.Random;
 
-class Player
+public class Player
 {
     protected Random rand = new Random();
     
@@ -25,12 +25,16 @@ class Player
     protected int health = maxHealth;
     protected int bandages = 3;
     
-    public Player(String username)
+    Player(String username)
     {
         this.username = username;
     }
-    
-    public String toString()
+
+    public String toString() {
+        return username + " (" + health + "/" + maxHealth + ")";
+    }
+
+    public String getDescription()
     {
         return "Player: " + username +
             "\nHealth: " + health +
@@ -119,4 +123,8 @@ class Player
     }
 
     public void attack(Player target) {}
+
+    public int getBandages() {
+        return bandages;
+    }
 }

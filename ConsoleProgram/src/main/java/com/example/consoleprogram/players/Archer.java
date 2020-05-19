@@ -1,6 +1,6 @@
-package com.example.consoleprogram;
+package com.example.consoleprogram.players;
 
-class Archer extends Player
+public class Archer extends Player
 {
     // Store whether or not archer is handicapped
     private boolean aimbotEnabled;
@@ -17,9 +17,9 @@ class Archer extends Player
         numberOfArrows = 100;
     }
     
-    public String toString()
+    public String getDescription()
     {
-        return super.toString() +
+        return super.getDescription() +
             "Class: Archer" +
             "\nAimBot Enabled: " + aimbotEnabled + 
             "\nNumber of Arrows: " + numberOfArrows + "\n";

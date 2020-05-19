@@ -1,4 +1,4 @@
-package com.example.consoleprogram;
+package com.example.consoleprogram.game;
 
 import java.util.*;
 

@@ -1,14 +1,14 @@
-package com.example.consoleprogram;
+package com.example.consoleprogram.players;
 
-class Mage extends Player
+public class Mage extends Player
 {
     public Mage(String username) {
         super(username);
     }
     
-    public String toString()
+    public String getDescription()
     {
-        return super.toString() +
+        return super.getDescription() +
             "Class: Mage\n";
     }
 
