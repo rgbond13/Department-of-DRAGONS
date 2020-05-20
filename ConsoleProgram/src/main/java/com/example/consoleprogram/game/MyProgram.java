@@ -1,51 +1,56 @@
 package com.example.consoleprogram.game;
 
-import com.example.consoleprogram.players.Archer;
-import com.example.consoleprogram.players.Mage;
-import com.example.consoleprogram.players.Player;
+import com.example.consoleprogram.characters.Archer;
+import com.example.consoleprogram.characters.Dragon;
+import com.example.consoleprogram.characters.Mage;
+import com.example.consoleprogram.characters.Character;
+import com.example.consoleprogram.characters.Monster;
+import com.example.consoleprogram.characters.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class MyProgram extends ConsoleProgram
 {
-    private ArrayList<Player> players;
+    private Random rand = new Random();
+    private ArrayList<Character> characters;
 
     public void run()
     {
         System.out.println("Now playing Department of DRAGONS!");
 
-        // Ask for amount of players
-        int numberOfPlayers = 0;
-        while (numberOfPlayers < 2 || numberOfPlayers > 8) {
-            numberOfPlayers = readInt("Choose how many players (2-8): ");
+        // Ask for amount of characters
+        int numberOfCharacters = 0;
+        while (numberOfCharacters < 2 || numberOfCharacters > 8) {
+            numberOfCharacters = readInt("Choose how many characters (2-8): ");
         }
 
         // Create the players, and print their stats
-        players = createPlayers(numberOfPlayers);
-        for (Player player : players) {
-            System.out.println(player.getDescription());
+        characters = createCharacters(numberOfCharacters);
+        for (Character character : characters) {
+            System.out.println(character.getDescription());
         }
 
         // TODO: Sudden Death
         // Take turns until there are less than 2 players remaining
-        int currentPlayer = 0;
+        int currentCharacter = 0;
         while (getNumberOfPlayersAlive() >= 2) {
-            Player player = players.get(currentPlayer);
-            playTurn(player);
+            Character character = characters.get(currentCharacter);
+            playTurn(character);
 
             // Iterate to the next player
-            currentPlayer++;
-            if (currentPlayer == numberOfPlayers) {
-                currentPlayer = 0;
+            currentCharacter++;
+            if (currentCharacter == numberOfCharacters) {
+                currentCharacter = 0;
             }
         }
 
         // Print who is alive at the end, or "tie" if there are no alive players.
-        for (Player player : players) {
-            if (player.isAlive()) {
-                System.out.println(player.getUsername() + " won!");
+        for (Character character : characters) {
+            if (character.isAlive()) {
+                System.out.println(character.getUsername() + " won!");
                 return;
             }
         }
@@ -53,20 +58,43 @@ public class MyProgram extends ConsoleProgram
         // TODO: Credits
     }
 
-    private void playTurn(Player player) {
-        if (!player.isAlive()) {
+    private void playTurn(Character character) {
+        if (!character.isAlive()) {
             return;
         }
 
+        if (character instanceof Player) {
+            Player player = (Player) character;
+            playTurn(player);
+        } else if (character instanceof Monster) {
+            Monster monster = (Monster) character;
+            playTurn(monster);
+        }
+    }
+
+    private void playTurn(Monster monster) {
+        // Build a list of players who are alive, except the player whose turn it is.
+        ArrayList<Character> targets = new ArrayList<>();
+        for (Character target : characters) {
+            if (target != monster && target.isAlive()) {
+                targets.add(target);
+            }
+        }
+
+        Character target = targets.get(rand.nextInt(targets.size()));
+        monster.attack(target);
+    }
+
+    private void playTurn(Player player) {
         System.out.println("Player: " + player);
         int option = readOption(Arrays.asList("Attack", "Heal (" + player.getBandages() + " bandages)", "Pass", "Surrender", "Info"));
         switch (option) {
             case 1:
                 // Attack
 
-                // Build a list of players who are alive, except the player whose turn it is.
+                // Build a list of characters who are alive, except the player whose turn it is.
                 ArrayList<String> targets = new ArrayList<>();
-                for (Player target : players) {
+                for (Character target : characters) {
                     if (target != player && target.isAlive()) {
                         targets.add(target.toString());
                     }
@@ -77,8 +105,8 @@ public class MyProgram extends ConsoleProgram
                 String targetString = targets.get(targetNumber);
 
                 // Use player's choice to determine which Player object the user is targeting.
-                Player target = null;
-                for (Player possibleTarget : players) {
+                Character target = null;
+                for (Character possibleTarget : characters) {
                     if (targetString.equals(possibleTarget.toString())) {
                         target = possibleTarget;
                     }
@@ -135,45 +163,43 @@ public class MyProgram extends ConsoleProgram
         }
     }
     
-    private ArrayList<Player> createPlayers(int numberOfPlayers) {
-        ArrayList<Player> players = new ArrayList<Player>(numberOfPlayers);
+    private ArrayList<Character> createCharacters(int numberOfPlayers) {
+        ArrayList<Character> characters = new ArrayList<Character>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
             System.out.println("Player " + (i + 1));
             System.out.println("What class would you like to play as?");
-            System.out.println("1. Mage");
-            System.out.println("2. Archer");
-            int classInput = 0;
-            while (classInput < 1 || classInput > 2) {
-                classInput = readInt("");
-            }
+            int characterType = readOption(Arrays.asList("Mage", "Archer", "Dragon"));
             
             String username = "";
             while (username.length() == 0) {
                 username = readLine("What is your username? ").trim();
             }
             
-            Player newPlayer;
-            switch (classInput) {
+            Character newCharacter;
+            switch (characterType) {
             case 1:
-                newPlayer = new Mage(username);
+                newCharacter = new Mage(username);
                 break;
             case 2:
-                newPlayer = new Archer(username);
+                newCharacter = new Archer(username);
+                break;
+            case 3:
+                newCharacter = new Dragon(username);
                 break;
             default:
                 System.out.println("Invalid selection made!");
-                newPlayer = null;
+                newCharacter = null;
             }
             
-            players.add(newPlayer);
+            characters.add(newCharacter);
         }
-        return players;
+        return characters;
     }
     
     private int getNumberOfPlayersAlive() {
         int count = 0;
-        for (Player player : players) {
-            if (player.isAlive()) {
+        for (Character character : characters) {
+            if (character.isAlive()) {
                 count++;
             }
         }

@@ -1,18 +1,13 @@
-package com.example.consoleprogram.players;
+package com.example.consoleprogram.characters;
 
 public class Archer extends Player
 {
-    // Store whether or not archer is handicapped
-    private boolean aimbotEnabled;
-    
     // Archer-specific variables
     private int numberOfArrows;
     
     public Archer(String username)
     {
         super(username);
-        
-        aimbotEnabled = false;
         
         numberOfArrows = 100;
     }
@@ -21,12 +16,11 @@ public class Archer extends Player
     {
         return super.getDescription() +
             "Class: Archer" +
-            "\nAimBot Enabled: " + aimbotEnabled + 
             "\nNumber of Arrows: " + numberOfArrows + "\n";
     }
 
     @Override
-    public void attack(Player target)
+    public void attack(Character target)
     {
         // Ensure we have arrows
         if (numberOfArrows <= 0)
@@ -38,7 +32,7 @@ public class Archer extends Player
         // Shoot arrow
         numberOfArrows--;
         boolean hitTarget = true;
-        if (!aimbotEnabled && rand.nextInt(4) == 0)
+        if (rand.nextInt(4) == 0)
         {
             hitTarget = false;
         }
@@ -64,20 +58,4 @@ public class Archer extends Player
             System.out.println(username + " is out of arrows!");
         }
     }
-    
-    public void enableAimbot()
-    {
-        System.out.println(username + " enabled aimbot");
-        aimbotEnabled = true;
-    }
-    
-    public void disableAimbot()
-    {
-        System.out.println(username + " disabled aimbot");
-        aimbotEnabled = false;
-    }
-    
-    // Level 1 range: 50m
-    // Each levelup adds 10m
-    
 }

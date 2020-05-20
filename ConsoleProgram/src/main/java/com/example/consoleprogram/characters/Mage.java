@@ -1,4 +1,4 @@
-package com.example.consoleprogram.players;
+package com.example.consoleprogram.characters;
 
 public class Mage extends Player
 {
@@ -13,7 +13,7 @@ public class Mage extends Player
     }
 
     @Override
-    public void attack(Player target) {
+    public void attack(Character target) {
         int damageDealt = 10;
         
         if (rand.nextInt(10) == 0) {
