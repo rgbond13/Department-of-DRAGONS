@@ -17,18 +17,33 @@ public class MyProgram extends ConsoleProgram
     private Random rand = new Random();
     private ArrayList<Character> characters;
 
-    public void run()
-    {
+    private static final int MAX_PLAYERS = 8;
+    private static final int MIN_PLAYERS = 2;
+    private static final int MAX_MONSTERS = 8;
+    private static final int MIN_MONSTERS = 2;
+
+    private GameMode mode;
+
+    enum GameMode {
+        FREE_FOR_ALL,
+        COOP
+    }
+
+    public void run() throws Exception {
         System.out.println("Now playing Department of DRAGONS!");
 
-        // Ask for amount of characters
-        int numberOfCharacters = 0;
-        while (numberOfCharacters < 2 || numberOfCharacters > 8) {
-            numberOfCharacters = readInt("Choose how many characters (2-8): ");
+        System.out.println("Game Mode");
+        switch (readOption(Arrays.asList("Free for All", "Co-Op"))) {
+            case 1:
+                mode = GameMode.FREE_FOR_ALL;
+                break;
+            case 2:
+                mode = GameMode.COOP;
+                break;
         }
 
         // Create the players, and print their stats
-        characters = createCharacters(numberOfCharacters);
+        characters = createCharacters();
         for (Character character : characters) {
             System.out.println(character.getDescription());
         }
@@ -36,26 +51,48 @@ public class MyProgram extends ConsoleProgram
         // TODO: Sudden Death
         // Take turns until there are less than 2 players remaining
         int currentCharacter = 0;
-        while (getNumberOfPlayersAlive() >= 2) {
+        while (!isGameFinished()) {
             Character character = characters.get(currentCharacter);
             playTurn(character);
 
             // Iterate to the next player
             currentCharacter++;
-            if (currentCharacter == numberOfCharacters) {
+            if (currentCharacter == characters.size()) {
                 currentCharacter = 0;
             }
         }
 
-        // Print who is alive at the end, or "tie" if there are no alive players.
-        for (Character character : characters) {
-            if (character.isAlive()) {
-                System.out.println(character.getUsername() + " won!");
-                return;
+        if (mode == GameMode.FREE_FOR_ALL) {
+            // Print who is alive at the end, or "tie" if there are no alive players.
+            Character winner = null;
+            for (Character character : characters) {
+                if (character.isAlive()) {
+                    winner = character;
+                }
             }
+            if (winner == null) {
+                System.out.println("Nobody won - It's a tie!");
+            } else {
+                System.out.println(winner.getUsername() + " won!");
+            }
+        } else if (mode == GameMode.COOP) {
+            if (getNumberOfMonstersAlive() >= 1)
+                System.out.println("Monsters won!");
+            else if (getNumberOfPlayersAlive() >= 1)
+                System.out.println("Players won!");
+            else
+                System.out.println("It's a tie! Nobody won.");
         }
-        System.out.println("It's a tie! Nobody won.");
         // TODO: Credits
+    }
+
+    private boolean isGameFinished() throws Exception {
+        if (mode == GameMode.COOP)
+            return getNumberOfMonstersAlive() <= 0 || getNumberOfPlayersAlive() <= 0;
+        else if (mode == GameMode.FREE_FOR_ALL)
+            return getNumberOfMonstersAlive() + getNumberOfPlayersAlive() <= 1;
+        else
+            throw new Exception("Invalid Game Mode");
     }
 
     private void playTurn(Character character) {
@@ -76,7 +113,7 @@ public class MyProgram extends ConsoleProgram
         // Build a list of players who are alive, except the player whose turn it is.
         ArrayList<Character> targets = new ArrayList<>();
         for (Character target : characters) {
-            if (target != monster && target.isAlive()) {
+            if (target != monster && target.isAlive() && (mode == GameMode.FREE_FOR_ALL || target instanceof Player)) {
                 targets.add(target);
             }
         }
@@ -95,7 +132,7 @@ public class MyProgram extends ConsoleProgram
                 // Build a list of characters who are alive, except the player whose turn it is.
                 ArrayList<String> targets = new ArrayList<>();
                 for (Character target : characters) {
-                    if (target != player && target.isAlive()) {
+                    if (target != player && target.isAlive() && (mode == GameMode.FREE_FOR_ALL || target instanceof Monster)) {
                         targets.add(target.toString());
                     }
                 }
@@ -163,28 +200,32 @@ public class MyProgram extends ConsoleProgram
         }
     }
     
-    private ArrayList<Character> createCharacters(int numberOfPlayers) {
+    private ArrayList<Character> createCharacters() {
+        // Ask for amount of players
+        int numberOfPlayers;
+        do {
+            numberOfPlayers = readInt("Choose how many Human Players (" + MIN_PLAYERS + "-" + MAX_PLAYERS + "): ");
+        } while (numberOfPlayers < MIN_PLAYERS || numberOfPlayers > MAX_PLAYERS);
+
+        // Create Players
         ArrayList<Character> characters = new ArrayList<Character>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
             System.out.println("Player " + (i + 1));
             System.out.println("What class would you like to play as?");
-            int characterType = readOption(Arrays.asList("Mage", "Archer", "Dragon"));
+            int characterType = readOption(Arrays.asList("Mage", "Archer"));
             
             String username = "";
             while (username.length() == 0) {
                 username = readLine("What is your username? ").trim();
             }
             
-            Character newCharacter;
+            Player newCharacter;
             switch (characterType) {
             case 1:
                 newCharacter = new Mage(username);
                 break;
             case 2:
                 newCharacter = new Archer(username);
-                break;
-            case 3:
-                newCharacter = new Dragon(username);
                 break;
             default:
                 System.out.println("Invalid selection made!");
@@ -193,13 +234,57 @@ public class MyProgram extends ConsoleProgram
             
             characters.add(newCharacter);
         }
+
+        // Ask for amount of monsters
+        int numberOfMonsters;
+        do {
+            numberOfMonsters = readInt("Choose how many Monsters (" + MIN_MONSTERS + "-" + MAX_MONSTERS + "): ");
+        } while (numberOfMonsters < MIN_MONSTERS || numberOfMonsters > MAX_MONSTERS);
+
+        // Create Monsters
+        boolean randomize = false;
+        for (int i = 0; i < numberOfMonsters; i++) {
+            System.out.println("Pick a monster type.");
+
+            int characterType = rand.nextInt(1) + 1;
+            if (!randomize) {
+                int choice = readOption(Arrays.asList("Randomize Rest", "Dragon"));
+                if (choice == 1)
+                    randomize = true;
+                else
+                    characterType = choice - 1;
+            }
+
+            Monster newCharacter;
+            switch (characterType) {
+                case 1:
+                    newCharacter = new Dragon();
+                    break;
+                default:
+                    System.out.println("Invalid selection made!");
+                    newCharacter = null;
+            }
+
+            characters.add(newCharacter);
+        }
+
         return characters;
     }
-    
+
+    private int getNumberOfMonstersAlive() {
+        int count = 0;
+        for (Character character : characters) {
+            if (character.isAlive() && character instanceof Monster) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     private int getNumberOfPlayersAlive() {
         int count = 0;
         for (Character character : characters) {
-            if (character.isAlive()) {
+            if (character.isAlive() && character instanceof Player) {
                 count++;
             }
         }

@@ -1,8 +1,10 @@
 package com.example.consoleprogram.characters;
 
 public class Dragon extends Monster {
-    public Dragon(String username) {
-        super(username);
+    static private int numDragons = 0;
+
+    public Dragon() {
+        super("Dragon " + (++numDragons));
     }
 
     @Override

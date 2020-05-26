@@ -3,13 +3,11 @@ package com.example.consoleprogram.characters;
 public class Archer extends Player
 {
     // Archer-specific variables
-    private int numberOfArrows;
+    private int numberOfArrows = 100;
     
     public Archer(String username)
     {
         super(username);
-        
-        numberOfArrows = 100;
     }
     
     public String getDescription()
