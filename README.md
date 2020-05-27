@@ -28,7 +28,7 @@ Also, if you want to use testing features, open Git Bash and type `git checkout 
 1. Near the top-center of your screen, click "Add Configuration"
 2. Click the '+' in the top-left, and choose "Application"
 3. Provide a name (eg "Department of Dragons")
-4. Next to "Main class:" put `com.example.consoleprogram.ConsoleProgram`.
+4. Next to "Main class:" put `com.example.consoleprogram.game.ConsoleProgram`.
 5. Next to "Use classpath of module", click the drop-down and choose "ConsoleProgram".
 6. Click "OK" at the bottom.
 7. To run, click the green play button at the top of your screen, or press Shift+F10.

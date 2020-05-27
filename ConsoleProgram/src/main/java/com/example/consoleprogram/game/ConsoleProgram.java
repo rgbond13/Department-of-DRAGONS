@@ -6,7 +6,7 @@ public class ConsoleProgram{
 
     private Scanner scanner;
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         new MyProgram().run();
     }
 
