@@ -6,6 +6,12 @@ public class Dragon extends Monster {
     public Dragon() {
         super("Dragon " + (++numDragons));
     }
+    
+    public String getDescription()
+    {
+        return super.getDescription() +
+            "Monster: Dragon\n";
+    }
 
     @Override
     public void attack(Character target) {
