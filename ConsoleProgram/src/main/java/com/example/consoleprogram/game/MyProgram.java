@@ -6,6 +6,7 @@ import com.example.consoleprogram.characters.Mage;
 import com.example.consoleprogram.characters.Character;
 import com.example.consoleprogram.characters.Monster;
 import com.example.consoleprogram.characters.Player;
+import com.example.consoleprogram.characters.RatMischief;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -248,7 +249,7 @@ public class MyProgram extends ConsoleProgram
 
             int characterType = rand.nextInt(1) + 1;
             if (!randomize) {
-                int choice = readOption(Arrays.asList("Randomize Rest", "Dragon"));
+                int choice = readOption(Arrays.asList("Randomize Rest", "Dragon", "Rat Mischief"));
                 if (choice == 1)
                     randomize = true;
                 else
@@ -259,6 +260,9 @@ public class MyProgram extends ConsoleProgram
             switch (characterType) {
                 case 1:
                     newCharacter = new Dragon();
+                    break;
+                case 2:
+                    newCharacter = new RatMischief();
                     break;
                 default:
                     System.out.println("Invalid selection made!");
