@@ -42,7 +42,7 @@ public class Archer extends Player
         
         if (hitTarget)
         {
-            int damageDealt = rand.nextInt(10) + 10;
+            int damageDealt = rand.nextInt(11) + 10;
             System.out.println(username + " shot " + target.username + " for " + damageDealt + " damage!");
             target.damage(damageDealt);
             addXp(damageDealt);

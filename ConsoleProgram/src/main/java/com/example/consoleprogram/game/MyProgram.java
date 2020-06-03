@@ -74,7 +74,7 @@ public class MyProgram extends ConsoleProgram
             if (winner == null) {
                 System.out.println("Nobody won - It's a tie!");
             } else {
-                System.out.println(winner.getUsername() + " won!");
+                System.out.println(winner.getUsername() + " won with " + winner.getHealth() + " health left!");
             }
         } else if (mode == GameMode.COOP) {
             if (getNumberOfMonstersAlive() >= 1)
